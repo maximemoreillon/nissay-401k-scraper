@@ -1,0 +1,17 @@
+import "dotenv/config";
+import { version } from "./package.json";
+import { scrape } from "./scraper";
+import { register_valuation } from "./registration";
+console.log(`Nissay 401k scraper v${version}`);
+
+const scrape_and_register = async () => {
+  try {
+    const valuation = await scrape();
+    console.log({ valuation });
+    register_valuation(valuation);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+scrape_and_register();
