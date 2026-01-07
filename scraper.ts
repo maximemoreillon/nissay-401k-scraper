@@ -13,8 +13,7 @@ export const scrape = async () => {
 
   try {
     browser = await puppeteer.launch({
-      executablePath: "/usr/bin/google-chrome",
-      args: ["--no-sandbox", "--disable-setuid-sandbox"],
+      args: ["--no-sandbox"],
     });
   } catch {
     browser = await puppeteer.launch();
