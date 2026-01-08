@@ -3,11 +3,11 @@ import axios from "axios";
 export const { FINANCES_API_URL, FINANCES_API_TOKEN, FINANCES_API_ACCOUNT_ID } =
   process.env;
 
-export const register_valuation = (valuation: number) => {
+export const register = (balance: number) => {
   const url = `${FINANCES_API_URL}/accounts/${FINANCES_API_ACCOUNT_ID}/balance`;
 
   const body = {
-    valuation,
+    balance,
     currency: "JPY",
   };
 
