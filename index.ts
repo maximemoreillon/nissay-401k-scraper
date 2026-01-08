@@ -5,13 +5,9 @@ import { register_valuation } from "./registration";
 console.log(`Nissay 401k scraper v${version}`);
 
 const scrape_and_register = async () => {
-  try {
-    const valuation = await scrape();
-    console.log({ valuation });
-    register_valuation(valuation);
-  } catch (error) {
-    console.error(error);
-  }
+  const valuation = await scrape();
+  console.log({ valuation });
+  register_valuation(valuation);
 };
 
 scrape_and_register();

@@ -9,15 +9,7 @@ const {
 export const scrape = async () => {
   console.log(`[Scraper] Scraper started`);
 
-  let browser: Browser;
-
-  try {
-    browser = await puppeteer.launch({
-      args: ["--no-sandbox"],
-    });
-  } catch {
-    browser = await puppeteer.launch();
-  }
+  const browser = await puppeteer.launch({ args: ["--no-sandbox"] });
 
   const page = await browser.newPage();
   try {
