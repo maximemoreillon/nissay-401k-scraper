@@ -27,7 +27,6 @@ apiVersion: external-secrets.io/v1
 kind: ExternalSecret
 metadata:
   name: env
-  namespace: nissay-401k-scraper-env
 spec:
   refreshInterval: 5m0s
   secretStoreRef:
