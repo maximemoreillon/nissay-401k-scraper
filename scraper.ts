@@ -1,7 +1,7 @@
-import puppeteer, { Page, Browser } from "puppeteer";
+import puppeteer from "puppeteer";
 
 const {
-  NISSAY_401K_LOGIN_URL = "",
+  NISSAY_401K_LOGIN_URL = "NISSAY_401K_LOGIN_URL",
   NISSAY_401K_PASSWORD = "",
   NISSAY_401K_USERNAME = "",
 } = process.env;
@@ -25,7 +25,7 @@ export const scrape = async () => {
 
     await page
       .locator(
-        "img[src='/dmckanyusha/salsa_open/auth/image/login_btn003.gif?20230320']"
+        "img[src='/dmckanyusha/salsa_open/auth/image/login_btn003.gif?20230320']",
       )
       .click();
 
@@ -47,7 +47,7 @@ export const scrape = async () => {
 
     const row = await frame.$(".valuationRow");
     const cells = await row?.$$eval("td", (td) =>
-      td.map((td) => td.textContent)
+      td.map((td) => td.textContent),
     );
 
     if (!cells) throw new Error("No cells");
