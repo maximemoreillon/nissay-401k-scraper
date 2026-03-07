@@ -11,13 +11,12 @@ export const register = (balance: number) => {
     currency: "JPY",
   };
 
-  const options = {
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${FINANCES_API_TOKEN}`,
-    },
-    timeout: 3000,
+  const headers: HeadersInit = {
+    "Content-Type": "application/json",
   };
 
-  return axios.post(url, body, options);
+  if (FINANCES_API_TOKEN)
+    headers.Authorization = `Bearer ${FINANCES_API_TOKEN}`;
+
+  return axios.post(url, body, { headers });
 };

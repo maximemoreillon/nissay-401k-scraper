@@ -13,13 +13,29 @@ spec:
             - name: ${APPLICATION_NAME}
               image: ${CONTAINER_IMAGE_TAGGED}
               env:
+                - name: FINANCES_API_URL
+                  value: http://finances
+                - name: FINANCES_API_ACCOUNT_ID
+                  value: "8"
                 - name: LOKI_URL
                   value: http://loki.monitoring:3100
-                - name: FINANCES_API_TOKEN
-                  valueFrom:
-                    secretKeyRef:
-                      name: oidc-token
-                      key: OIDC_M2M_ACCESS_TOKEN
               envFrom:
                 - secretRef:
-                    name: nissay-401k-scraper
+                    name: nissay-401k-scraper-env-from-vault
+---
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: env
+  namespace: nissay-401k-scraper-env
+spec:
+  refreshInterval: 5m0s
+  secretStoreRef:
+    name: vault
+    kind: ClusterSecretStore
+  target:
+    name: nissay-401k-scraper-env-from-vault
+    creationPolicy: Orphan
+  dataFrom:
+    - extract:
+        key: nissay-401k-scraper
