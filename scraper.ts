@@ -1,7 +1,7 @@
 import puppeteer from "puppeteer";
 
 const {
-  NISSAY_401K_LOGIN_URL = "NISSAY_401K_LOGIN_URL",
+  NISSAY_401K_LOGIN_URL = "https://401k.nissay.co.jp/dmckanyusha/salsa_open/auth/extra/Login_ip.jsp",
   NISSAY_401K_PASSWORD = "",
   NISSAY_401K_USERNAME = "",
 } = process.env;
