@@ -45,10 +45,11 @@ export const scrape = async () => {
   const frame = await frameHandle.contentFrame();
   if (!frame) throw new Error("iFrame content is null");
 
-  const row = await frame.$(".valuationRow");
+  // The iframe content loads after the parent page, so wait for the row to appear
+  const row = await frame.waitForSelector(".valuationRow");
   const cells = await row?.$$eval("td", (td) => td.map((td) => td.textContent));
 
-  if (!cells) throw new Error("No cells");
+  if (!cells?.length) throw new Error("No cells");
   const [valuationString] = cells;
   if (!valuationString) throw new Error("No valuation");
 
