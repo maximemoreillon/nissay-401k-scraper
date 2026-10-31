@@ -1,4 +1,5 @@
 import puppeteer from "puppeteer";
+import { logger } from "./logger";
 
 const {
   NISSAY_401K_LOGIN_URL = "https://401k.nissay.co.jp/dmckanyusha/salsa_open/auth/extra/Login_ip.jsp",
@@ -7,7 +8,7 @@ const {
 } = process.env;
 
 export const scrape = async () => {
-  console.log(`[Scraper] Scraper started`);
+  logger.info(`[Scraper] Scraper started`);
 
   const browser = await puppeteer.launch({ args: ["--no-sandbox"] });
 
@@ -26,9 +27,9 @@ export const scrape = async () => {
     )
     .click();
 
-  console.log(`[Scraper] Credentials submitted`);
+  logger.info(`[Scraper] Credentials submitted`);
 
-  console.log(`[Scraper] Clicking next...`);
+  logger.info(`[Scraper] Clicking next...`);
   // Wait for navigation concurrently with the click so a fast page load is not missed
   await Promise.all([
     page.waitForNavigation(),
@@ -37,7 +38,7 @@ export const scrape = async () => {
       .click(),
   ]);
 
-  console.log(`[Scraper] Arrived to valuation page`);
+  logger.info(`[Scraper] Arrived to valuation page`);
 
   const frameHandle = await page.waitForSelector("[name='mainFrame']");
   if (!frameHandle) throw new Error("iFrame not found");
@@ -54,7 +55,7 @@ export const scrape = async () => {
   const valuation = Number(
     valuationString.replaceAll("円", "").replaceAll(",", ""),
   );
-  if (Number.isNaN(valuation)) throw `Invalid valuation: ${valuationString}`;
+  if (Number.isNaN(valuation)) throw new Error(`Invalid valuation: ${valuationString}`);
 
   await browser.close();
 
